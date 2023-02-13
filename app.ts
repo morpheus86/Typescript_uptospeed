@@ -18,9 +18,9 @@ const person = {
   role: Role.ADMIN,
 };
 
-if (person.role === Role.ADMIN) {
-  console.log("ADMIN", Role.ADMIN);
-}
+// if (person.role === Role.ADMIN) {
+//   console.log("ADMIN", Role.ADMIN);
+// }
 
 // function type that return a number variable that holds a function
 let combineValue: (a: number, b: number) => number;
@@ -67,8 +67,39 @@ class It extends Department {
   }
 }
 
+class HRdepartment extends Department {
+  private static instance: HRdepartment;
+  get departmentMember() {
+    if (this.members) {
+      return this.members;
+    }
+    throw new Error("No members");
+  }
+  private constructor(id: string, private members: string[]) {
+    super(id, "HR");
+  }
+  describe(this: Department): void {
+    console.log("this.member");
+  }
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new HRdepartment("d2", []);
+    return this.instance;
+  }
+  addMembers(member: string) {
+    this.members.push(member);
+  }
+}
 const ItDep = new It("bred", ["Max"]);
 ItDep.addEmployee("Siri");
 ItDep.addAdmins("Siri");
 ItDep.departmentSetter = "karim";
 console.log("ItDep", ItDep);
+
+const hrDep = HRdepartment.getInstance();
+const hrDep2 = HRdepartment.getInstance();
+hrDep.addMembers("helaine");
+console.log("hrDep", hrDep);
+console.log("hrDep2", hrDep2);
