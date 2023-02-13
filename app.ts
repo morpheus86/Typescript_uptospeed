@@ -27,20 +27,21 @@ let combineValue: (a: number, b: number) => number;
 combineValue = (a, b) => a + b;
 // console.log("here", combineValue(33, 33));
 
-class Department {
+abstract class Department {
   private employees: string[] = [];
   // protected employees: string[] = [];
   constructor(public name: string, private readonly id: string) {
     // this.name = name;
   }
+  abstract describe(this: Department): void;
   addEmployee(employee: string) {
     this.employees.push(employee);
   }
 }
 
-const accounting = new Department("Accounting", "retreat");
-accounting.addEmployee("voisin");
-console.log("accounting", accounting);
+// const accounting = new Department("Accounting", "retreat");
+// accounting.addEmployee("voisin");
+// console.log("accounting", accounting);
 
 class It extends Department {
   get departmentIt() {
@@ -60,6 +61,9 @@ class It extends Department {
   }
   addAdmins(admin: string) {
     this.admins.push(admin);
+  }
+  describe() {
+    console.log("It department");
   }
 }
 
