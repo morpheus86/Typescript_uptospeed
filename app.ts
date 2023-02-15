@@ -71,4 +71,31 @@ const ItDep = new It("bred", ["Max"]);
 ItDep.addEmployee("Siri");
 ItDep.addAdmins("Siri");
 ItDep.departmentSetter = "karim";
-console.log("ItDep", ItDep);
+// console.log("ItDep", ItDep);
+function Autobind(
+  target: any,
+  methodName: string | Symbol,
+  descriptor: PropertyDescriptor
+): PropertyDescriptor {
+  console.log("desciptor", descriptor);
+  const originalMethod = descriptor.value;
+  const adjDesc: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDesc;
+}
+class Printer {
+  message = "This works!!";
+  @Autobind
+  showmessage() {
+    console.log(this.message);
+  }
+}
+const pde = new Printer();
+const newButton = document.querySelector("button")!;
+newButton.addEventListener("click", pde.showmessage);

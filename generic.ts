@@ -53,4 +53,70 @@ const objectItem = new DataStorage<string>();
 objectItem.addItem("Max");
 objectItem.addItem("Manu");
 objectItem.removeItem("Max");
-console.log("objectItem.get", objectItem.getItems());
+// console.log("objectItem.get", objectItem.getItems());
+
+// Decorators
+
+function Logger(logString: string) {
+  return function (target: Function) {
+    console.log(logString);
+    console.log("target", target);
+  };
+}
+function Display(template: string, hookId: string) {
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super();
+        const element = document.getElementById(hookId);
+        if (element) {
+          element.innerHTML = template;
+          element.querySelector("h1")!.textContent = this.name;
+        }
+      }
+    };
+  };
+}
+@Display("<h1>My custom Decorator</h1>", "person")
+class PridePerson {
+  name = "Max";
+  constructor() {
+    console.log("first");
+  }
+}
+// const pid = new PridePerson();
+
+// console.log("pid", pid);
+function Log(target: any, propertyName: string | Symbol) {
+  console.log("target", target);
+  console.log("propertyName", propertyName);
+}
+
+function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+  console.log(descriptor);
+  console.log("target2", target, name);
+}
+
+function Log3(target: any, name: string, position: number) {
+  console.log("Parameter Decorator");
+  console.log("target", target);
+  console.log("name", name);
+  console.log("position", position);
+}
+class Product {
+  @Log
+  @Log2
+  set price(val: number) {
+    if (this._price > 0) {
+      this._price = val;
+    } else {
+      throw new Error("Invalid Price");
+    }
+  }
+  constructor(title: string, private _price: number) {}
+  taxPrice(@Log3 tax: number) {
+    return this._price * (1 + tax);
+  }
+}
