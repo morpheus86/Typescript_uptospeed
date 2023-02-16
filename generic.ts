@@ -91,19 +91,19 @@ class PridePerson {
 // console.log("pid", pid);
 function Log(target: any, propertyName: string | Symbol) {
   console.log("target", target);
-  console.log("propertyName", propertyName);
+  // console.log("propertyName", propertyName);
 }
 
 function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
   console.log(descriptor);
-  console.log("target2", target, name);
+  // console.log("target2", target, name);
 }
 
 function Log3(target: any, name: string, position: number) {
-  console.log("Parameter Decorator");
-  console.log("target", target);
-  console.log("name", name);
-  console.log("position", position);
+  // console.log("Parameter Decorator");
+  // console.log("target", target);
+  // console.log("name", name);
+  // console.log("position", position);
 }
 class Product {
   @Log

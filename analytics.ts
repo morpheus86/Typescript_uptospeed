@@ -4,4 +4,4 @@ function clickMe() {
   console.log("clcked");
 }
 
-button.addEventListener("click", clickMe);
+// button.addEventListener("click", clickMe);
